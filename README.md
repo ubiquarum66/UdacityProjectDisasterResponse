@@ -89,7 +89,7 @@ plotly side (frontend) (templates...html),
         + data\disaster_categories.csv  raw data - tagging labels provided by figure eight in a text coded encoding
         + data\disaster_messages.csv  raw data of tweets , as tagged by figure eight, messages by ID, genre of channel
         + data\process_data.py python module (ETL pipeline) to transfer and unif the two csv to a sql database
-            + data\DisasterResponse.db resulting sqlite3 sql database
+            + data\ExampleDisasterResponse.db example for resulting sqlite3 sql database
             + data\testresultsdatabase.txt sqlite3 shell cli extracted schema of created database
             
 
