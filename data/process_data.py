@@ -109,8 +109,14 @@ def clean_data(df):
 def save_data(df, database_filename):
 
 # ===1.)   Save the clean dataset into an sqlite database.
-   # You can do this with pandas [`to_sql` method](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_sql.html)
-   #  combined with the SQLAlchemy library. Remember to import SQLAlchemy's `create_engine` in the first cell of this notebook to use it below.
+    # the schema of result has to fit the assumptions in the flask app, and in the ml pipeline and model py: 
+    # flask: genre column is actively searched - placing no problem
+    # flask: tweet categories are indexed with 4:, thus they should start at column nr. 4, counting start with 0
+    # schema of result is: (checked with sqlite shell cli:)
+    
+    startupdatabase = 'sqlite:///' + database_filename
+    engine = create_engine(startupdatabase)
+    df.to_sql('disastertweets', engine, index=False)
 
 
 
@@ -138,7 +144,6 @@ def main():
               'to as the third argument. \n\nExample: python process_data.py '\
               'disaster_messages.csv disaster_categories.csv '\
               'DisasterResponse.db')
-
 
 if __name__ == '__main__':
     main()
