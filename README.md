@@ -11,7 +11,7 @@ Table of Contents:
 ### 1. Installations
 
 The jupyter notebooks for project preparation are stored in the notebooks folder
-of gitHub [project repiository]( https://github.com/ubiquarum66/UdacityProjectDisasterResponse)
+of gitHub [project repository]( https://github.com/ubiquarum66/UdacityProjectDisasterResponse)
 for Project 2.
 
 The project is set up as described in the readme of Udacity:
@@ -70,7 +70,10 @@ FLASK side (backend) - run.py
 + provide the same tokenizer, as the model will call it
 + load databaseand model 
 
-plotly side (frontend) (templates...html), create basic layout, form to submit and carry the ginger and flask induced variables and scripts to provide the plotly functions with the necessary backend information.
+plotly side (frontend) (templates...html), 
++ create basic layout, with 
++ form to submit and 
++ carry the ginger and flask induced variables and scripts to provide the plotly functions with the necessary backend information.
 
 
 ### 3. File Descriptions
@@ -83,9 +86,9 @@ plotly side (frontend) (templates...html), create basic layout, form to submit a
             + app\templates\master.html
 
     + data: raw (csv) data and transformed sql datbase, as well as python transformer module
-            + data\disaster_categories.csv  raw data - tagging labels provided by figure eight in a text coded encoding
-            + data\disaster_messages.csv  raw data of tweets , as tagged by figure eight, messages by ID, genre of channel
-            + data\process_data.py python module (ETL pipeline) to transfer and unif the two csv to a sql database
+        + data\disaster_categories.csv  raw data - tagging labels provided by figure eight in a text coded encoding
+        + data\disaster_messages.csv  raw data of tweets , as tagged by figure eight, messages by ID, genre of channel
+        + data\process_data.py python module (ETL pipeline) to transfer and unif the two csv to a sql database
             + data\DisasterResponse.db resulting sqlite3 sql database
             + data\testresultsdatabase.txt sqlite3 shell cli extracted schema of created database
             
