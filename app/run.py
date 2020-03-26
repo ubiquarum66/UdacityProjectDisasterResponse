@@ -1,7 +1,9 @@
 import json
 import plotly
+# basic imports
 import numpy as np
 import pandas as pd
+import re
 
 import nltk
 from nltk.stem import WordNetLemmatizer
@@ -30,8 +32,8 @@ app = Flask(__name__)
 my_databasename = '../data/DisasterResponse.db'
 my_startupdatabase = 'sqlite:///' + my_databasename
 my_tablename = 'disastertweets'
-my_modelname = '../model/DisasterResponse.pkl'
-my_Debug = True
+my_modelname = '../models/classifier.pkl'
+my_Debug = False
 #-------------------------------------------------------
 
 #~ def tokenize(text):
@@ -58,6 +60,11 @@ def tokenize(text):
 
     return clean_tokens
 
+def tokenizer_test():
+    text = "water and water ??? laber lall und was soll das auch alles ";
+    testtokens= tokenize(text);
+    print("Test des tokenizers....\n")
+    print(testtokens);
 
 
 #engine = create_engine('sqlite:///../data/YourDatabaseName.db')
@@ -76,16 +83,25 @@ if (my_Debug == False):
 @app.route('/')
 @app.route('/index')
 def index():
-    
+    # check wheteher all libs for tokenizer are there.
+    tokenizer_test()
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
-    print("requested index page")
-    print(genre_counts)
+    #print("requested index page")
+    #print(genre_counts)
     genre_names = list(genre_counts.index)
-    print(genre_names)
+    #print(genre_names)
     genre_counts = df.groupby('genre').count()['message']
     
+    # now generate some visuals regarding distribution of labels /tags in disaster situations
+    # nota bene: here the sequence direct, news , social is presumed, if there are other genres,
+    # here has to coma ea more complicated  analysis step...
+    
+    # The following - if more time available - should have been transfereed 
+    # to a sub routine or a database wrangkling module.
+    # it repeats the same steps 5 times :-(
+        
     cname=[]
     cvals=[]
 
@@ -250,11 +266,6 @@ def index():
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
-    print ("===========================")
-    print(ids)
-    print ("===========================")
-    print(graphJSON)
-    print ("===========================")
     
     # render web page with plotly graphs
     return render_template('master.html', 

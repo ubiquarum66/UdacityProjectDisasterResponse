@@ -6,9 +6,9 @@
 Table of Contents:
 + Report and Homework Project 2
 
-### Report and Homework Project 2
+** Report and Homework Project 2 **
 
-1. Installations
+### 1. Installations
 
 The jupyter notebooks for project preparation are stored in the notebooks folder
 of gitHub [project repiository]( https://github.com/ubiquarum66/UdacityProjectDisasterResponse)
@@ -49,7 +49,7 @@ ETL:
 
 + load_data(messages_filepath, categories_filepath) get the csv files as pandas Dataframes
 + clean_data(df) merge the two table by a join with common ID, check for duplicates, remove duplicates
-+ spread the one string representation of §& category tags into 36 binary columns.
++ spread the one string representation of 36 category tags into 36 binary columns.
 + save_data(df, database_filepath) put it allm into a sqlite3 database file in sql format 
 
 ML:
