@@ -37,11 +37,11 @@ optmodelname = '../model/DisasterResponseOpt.pkl'
 def load_data(database_filepath):
     startupdatabase = 'sqlite:///' + database_filepath
     df = pd.read_sql_table(tablename, startupdatabase)
-    df.head(3)
+    print(df.head(3))
     
     X = df.message.values
     y = df.loc[:,'related':]
-    category_names = df.columns['related':]
+    category_names = df.columns[4:]
     
     print (df.shape)
     print (X.shape)
@@ -77,7 +77,7 @@ def build_model():
     return pipeline;
     
 
-def optimize_model(model, X_train, y_train)
+def optimize_model(model, X_train, y_train):
     model.get_params().keys()
     # create a pipeline grid ... grid only 1x1 as computer is so slow ...:-(
     parameters = {
@@ -87,17 +87,15 @@ def optimize_model(model, X_train, y_train)
             'clf__estimator__min_samples_split': [2],
         }
 
-    cv = GridSearchCV(pipeline, param_grid=parameters)
+    cv = GridSearchCV(model, param_grid=parameters)
     cv.fit(X_train, y_train)    
     
     return cv;
     
 
-
-
-def evaluate_model(model, X_test, Y_test, category_names):
+def evaluate_model(model, X_test, y_test, category_names):
     # predict on test data
-    y_pred = pipeline.predict(X_test)
+    y_pred = model.predict(X_test)
     #debug: show the columns ....
     print (y_test.loc[:,'related'].values)
     print (y_pred[:,0])
@@ -106,10 +104,10 @@ def evaluate_model(model, X_test, Y_test, category_names):
         print(s, u)
 
 
-
 def save_model(model, model_filepath):
     joblib.dump(model, model_filepath)
     print("#----------------------- pickle export done", model_filepath)
+
 
 def main():
     if len(sys.argv) == 3:
@@ -117,6 +115,9 @@ def main():
         #introduced second name, as learning optimizing is so slow..
         # ....thus use first model for flask    
         opt_model_filepath = model_filepath + '_opt.pkl'
+        print ("Name of database:", database_filepath)
+        print ("Name of Model:", model_filepath)
+        print ("Name of opt. Model:", model_filepath)
         
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         X, Y, category_names = load_data(database_filepath)
