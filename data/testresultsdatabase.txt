@@ -1,0 +1,57 @@
+Count table:
+
+count(*)
+--------
+26180
+
+Schema table:
+CREATE TABLE disastertweets (
+	id BIGINT, 
+	message TEXT, 
+	original TEXT, 
+	genre TEXT, 
+	related BIGINT, 
+	request BIGINT, 
+	offer BIGINT, 
+	aid_related BIGINT, 
+	medical_help BIGINT, 
+	medical_products BIGINT, 
+	search_and_rescue BIGINT, 
+	security BIGINT, 
+	military BIGINT, 
+	child_alone BIGINT, 
+	water BIGINT, 
+	food BIGINT, 
+	shelter BIGINT, 
+	clothing BIGINT, 
+	money BIGINT, 
+	missing_people BIGINT, 
+	refugees BIGINT, 
+	death BIGINT, 
+	other_aid BIGINT, 
+	infrastructure_related BIGINT, 
+	transport BIGINT, 
+	buildings BIGINT, 
+	electricity BIGINT, 
+	tools BIGINT, 
+	hospitals BIGINT, 
+	shops BIGINT, 
+	aid_centers BIGINT, 
+	other_infrastructure BIGINT, 
+	weather_related BIGINT, 
+	floods BIGINT, 
+	storm BIGINT, 
+	fire BIGINT, 
+	earthquake BIGINT, 
+	cold BIGINT, 
+	other_weather BIGINT, 
+	direct_report BIGINT
+);
+
+Statistics Genre (Group By):
+
+genre|count(*)
+--------------
+direct|10747
+news|13039
+social|2394

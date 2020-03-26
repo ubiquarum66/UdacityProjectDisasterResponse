@@ -10,13 +10,13 @@ def load_data(messages_filepath, categories_filepath):
     # also there is a column genre, given the way the tweets were received
     # load messages dataset
     print("#-----------try loading data")
-    messages = pd.read_csv(messages_filepath, categories_filepath,encoding='latin-1')
+    messages = pd.read_csv(messages_filepath, encoding='latin-1')
     print(messages.head(2))
     # load the csv file containing all labesls assigned to the tweets externally (expert knowledge)
-    # identified by id and coded by a concat string of ever the same sequence, with bin info added as suffix to the toüpic name
+    # identified by id and coded by a concat string of ever the same sequence, with bin info added as suffix to the topic name
     # e.g. blue-0 = not blue,  blue-1 = is blue
     # load categories dataset
-    categories =  pd.read_csv(messages_filepath, categories_filepath, encoding='latin-1')
+    categories =  pd.read_csv(categories_filepath, encoding='latin-1')
     print(categories.head(2))
     #merge data according to ID .....
     df = messages.merge(categories, on='id')
@@ -118,7 +118,34 @@ def save_data(df, database_filename):
     engine = create_engine(startupdatabase)
     df.to_sql('disastertweets', engine, index=False)
 
+    #---------------result as of sqlite cli: ---------------------------------------------
+    #~ count(*)
+    #~ --------
+    #~ 26180
+    #
+    #~ CREATE TABLE disastertweets (
+    #~ id BIGINT, 
+    #~ message TEXT, 
+    #~ original TEXT, 
+    #~ genre TEXT, 
+    #~ related BIGINT, 
+    #~ ....
+    #~ direct_report BIGINT
+    #~ );
+    #
+    #~ Statistics Genre (Group By):
 
+    #~ genre|count(*)
+    #~ --------------
+    #~ direct|10747
+    #~ news|13039
+    #~ social|2394
+    
+    # onle line (shortened ....): 
+    #
+    #~ 202|?? port au prince ?? and ....| ....gouvenman an ak d entenasyonal. Mesi, BonDye beni Ayiti. |direct|     
+    #~                                            1|1|0|1|0|0|0|0|0|0|0|1|0|0|0|0|0|0|1|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+    #------------------------------------------------------------
 
 def main():
     if len(sys.argv) == 4:
