@@ -23,10 +23,13 @@ In addition, easy sql is made possible by sqlAlchemy.
 Some png Pictures as screenshots from the flask page are shown here:
 
 + Overview with 5 fact summary plots: 
-![main page: overview diagrams of the measurement contants and chapters](overviewpage.png)
+![main page: overview diagrams of the measurement contants and chapters](overview_page.png)
+![main page: lower half: scatter plot - compare global tagging with input channel tagging](overview_page2.png)
+
 
 + Query page using the learned model to classify queries
-![query page: check model](querypage.png)
+![query page: check model](query1.png)
+![query page: lower half](query2.png)
 
 ### 2. Project Motivation
 
