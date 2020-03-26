@@ -24,13 +24,94 @@ def load_data(messages_filepath, categories_filepath):
     print("#------------data loaded successfully")
     return df
     
+# here is a small helper function to separate the catagorie names from the value suffix -0,-1
+def namestring(s):
+    return s[0:-2]
+
 
 def clean_data(df):
-    pass
+    print("#------------data cleansing start")
+    # cleaning here is multipass:
+    print ("shape of DataFrame before drop:")
+    print(df.shape)
+    
+# ===1.) create category columns: blue-1;gree-0;red-1 shall be ['blue'] = 1,. ['green'] = 0, ['red]=1 for each row.
+
+    # thus, entries have to be split, and each part creates a new column
+    # assumption: all rows contain string in same seuence, all members are set each row.
+    # test: later, in sql datbase, check for null entries.
+    
+    # create a dataframe of the 36 individual category columns (but keep the content in each string - like:
+    #debug helper:
+    collist = df.categories.str.split(';',expand=True)
+    print (collist.shape, df.shape)
+    #doit:
+    categories = df.categories.str.split(';',expand=True)
+    print(categories.head(2))
+    
+    # to rename the columns, one example string content of the columns is analyzed, and 
+    # the name of topic has to be freed from the content markers -0,-1
+    # therefor, select the first row of the categories dataframe
+    row = categories.iloc[0,:]
+    print(row)
+    # use this row to extract a list of new column names for categories - I apply a lambda function of the helper above to each member of row Series
+    category_colnames = row.apply(lambda x: namestring(x))
+    # rename the columns of `categories`
+    categories.columns = category_colnames
+    categories.head()
+
+# ===2.)  Convert category values to just numbers 0 or 1.
+    # - Iterate through the category columns in df to keep only the last character of each string (the 1 or 0).
+    #    For example, `related-0` becomes `0`, `related-1` becomes `1`.
+
+    for column in categories:
+        #print(categories.head(20))
+        # set each value to be the last character of the string
+        categories[column] = categories[column].str.strip().str[-1]
+        # convert column from string to numeric
+        categories[column] = pd.to_numeric(categories[column])
+
+    categories.head()
 
 
+# ===3.) . Replace `categories` column in `df` with new category columns.
+    # - Up to now, no filtering, row size of df is row size of categories, thus we concatenate columnwise to enter the information
+    # -and drop the original categories column from `df`
+    df = df.drop(columns=['categories'])
+    df = pd.concat([df , categories], axis=1)
+    print(df.head(2))
+
+
+# ===4.)  Remove duplicates.
+    # - Check how many duplicates are in this dataset.
+    # - Drop the duplicates.
+    # - Confirm duplicates were removed.
+    # debug: to not have to run all above, if failing ....
+    #    df.to_csv("mycsv.csv", sep='\t')
+    #    df = pd.read_csv("mycsv.csv", sep='\t')
+    # assumptions: duplicate of id key is sufficient to trace duplicates....
+    # check number of duplicates (here optimizing by duplicate().sum() possible, not done yet....
+    udf = df.drop_duplicates(['id'])
+    print ("number of duplicates before drop:")
+    print(df.shape[0]- udf.shape[0])
+    #
+    df = df.drop_duplicates(['id'])
+    #
+    print (df.shape)
+    udf = df.drop_duplicates(['id'])
+    print ("number of duplicates after drop:")
+    print(df.shape[0]- udf.shape[0])
+    print ("cleansing finished... shape of result:")
+    print (df.shape)
+    print("#------------data cleansed successfully")
+    return df
+    
 def save_data(df, database_filename):
-    pass  
+
+# ===1.)   Save the clean dataset into an sqlite database.
+   # You can do this with pandas [`to_sql` method](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_sql.html)
+   #  combined with the SQLAlchemy library. Remember to import SQLAlchemy's `create_engine` in the first cell of this notebook to use it below.
+
 
 
 def main():
