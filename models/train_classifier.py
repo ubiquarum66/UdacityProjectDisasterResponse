@@ -83,8 +83,8 @@ def optimize_model(model, X_train, y_train):
     parameters = {
 #            'clf__estimator__n_estimators': [50, 100, 200],
 #            'clf__estimator__min_samples_split': [2, 3, 4],
-            'clf__estimator__n_estimators': [80],
-            'clf__estimator__min_samples_split': [2],
+            'clf__estimator__n_estimators': [80,100],
+            'clf__estimator__min_samples_split': [2,3],
         }
 
     cv = GridSearchCV(model, param_grid=parameters)
